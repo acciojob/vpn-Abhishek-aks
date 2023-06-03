@@ -9,35 +9,27 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String username;
     private String password;
     private String originalIp;
     private String maskedIp;
-    private boolean connected;
+    private Boolean connected;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Connection> connectionList;
 
     @ManyToMany
     @JoinColumn
-    private List<ServiceProvider> serrviceProviderList;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Connection> ConnectionList;
+    private List<ServiceProvider> serviceProviderList;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Country country;
-    // constructor
-    public User(){
+    private Country originalCountry;
 
+
+    public User() {
     }
-//    public User(int id, String username, String password, String originalIp, String maskedIp, boolean connected) {
-//        this.id = id;
-//        this.username = username;
-//        this.password = password;
-//        this.originalIp = originalIp;
-//        this.maskedIp = maskedIp;
-//        this.connected = connected;
-//    }
 
-    // Getter & Setter
+
     public int getId() {
         return id;
     }
@@ -86,27 +78,27 @@ public class User {
         this.connected = connected;
     }
 
-    public List<ServiceProvider> getServiceProviderList() {
-        return serrviceProviderList;
-    }
-
-    public void setServiceProviderList(List<ServiceProvider> serrviceProviderList) {
-        this.serrviceProviderList = serrviceProviderList;
-    }
-
     public List<Connection> getConnectionList() {
-        return ConnectionList;
+        return connectionList;
     }
 
     public void setConnectionList(List<Connection> connectionList) {
-        ConnectionList = connectionList;
+        this.connectionList = connectionList;
     }
 
-    public Country getCountry() {
-        return country;
+    public List<ServiceProvider> getServiceProviderList() {
+        return serviceProviderList;
     }
 
-    public void setCountry(Country country) {
-        this.country = country;
+    public void setServiceProviderList(List<ServiceProvider> serviceProviderList) {
+        this.serviceProviderList = serviceProviderList;
+    }
+
+    public Country getOriginalCountry() {
+        return originalCountry;
+    }
+
+    public void setOriginalCountry(Country originalCountry) {
+        this.originalCountry = originalCountry;
     }
 }
